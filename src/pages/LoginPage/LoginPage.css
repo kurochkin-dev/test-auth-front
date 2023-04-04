@@ -1,0 +1,15 @@
+.login-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.login-page h1 {
+    color: #004a9e;
+    font-size: 32px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
