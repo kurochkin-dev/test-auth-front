@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import "./ProductsPage.css";
+import {FETCH_PRODUCTS_URL} from "./constants";
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -15,7 +16,38 @@ const ProductsPage = () => {
         fetchProducts();
     }, []);
 
-    const fetchProducts = (url = "http://localhost:8000/api/products") => {
+    function generateNumberRange(centerNumber, max, range) {
+        let start = centerNumber - range;
+        let end = centerNumber + range;
+
+        if (start < 1) {
+            end += 1 - start;
+            start = 1;
+        }
+
+        if (end > max) {
+            start -= end - max;
+            end = max;
+        }
+
+        const result = [];
+        for (let i = start; i <= end; i++) {
+            result.push(i);
+        }
+        return result;
+    }
+
+    const centerNumber = 5;
+    const max = 7;
+    const range = 2;
+    const numberRange = generateNumberRange(centerNumber, max, range);
+    console.log(numberRange);
+
+
+    const fetchPage = (page= 0) => {
+        return fetchProducts(`${FETCH_PRODUCTS_URL}?page=${page}`)
+    }
+    const fetchProducts = (url = FETCH_PRODUCTS_URL) => {
         const token = localStorage.getItem("token");
 
         axios
@@ -34,8 +66,6 @@ const ProductsPage = () => {
                          last_page,
                          last_page_url,
                          next_page_url,
-                         from,
-                         per_page,
                          prev_page_url,
                      },
 
@@ -68,12 +98,18 @@ const ProductsPage = () => {
                         Back
                     </button>
                 )}
-        <span className="pagination-info">
-          Page {currentPage} of {lastPage}
-        </span>
-        <span className="pagination-total">
-    Total items: {total}
-        </span>
+                <span className="pagination-info">
+                    Page {currentPage} of {lastPage}
+                </span>
+
+                {generateNumberRange(currentPage, lastPage, 2).map((page) => (
+                    <span
+                        key={page}
+                        className={`pagination-button-page ${page === currentPage ? 'active' : ''}`}
+                        onClick={() => fetchPage(page)}>
+                        {page}</span>
+                ))}
+
                 {nextPageUrl && (
                     <button
                         className="pagination-button"
@@ -82,6 +118,18 @@ const ProductsPage = () => {
                         Next
                     </button>
                 )}
+
+                {lastPageUrl && (
+                    <button
+                        className="pagination-button"
+                        onClick={() => fetchProducts(lastPageUrl)}
+                    >
+                        Last
+                    </button>
+                )}
+                <span className="pagination-total">
+                    Total items: {total}
+                </span>
             </div>
             {products.length === 0 && <p>No products available</p>}
             {products.length > 0 && (
@@ -94,7 +142,7 @@ const ProductsPage = () => {
                             <p>Price: {product.price} USD</p>
                             <p>Quantity: {product.quantity}</p>
                             <p>
-                                <img src={"https://picsum.photos/200?" + Math.random()}/>
+                                <img src={"https://picsum.photos/200?" + Math.random()} alt=""/>
                             </p>
                         </li>
                     ))}
@@ -110,11 +158,17 @@ const ProductsPage = () => {
                     </button>
                 )}
                 <span className="pagination-info">
-          Page {currentPage} of {lastPage}
-        </span>
-                <span className="pagination-total">
-    Total items: {total}
-        </span>
+                    Page {currentPage} of {lastPage}
+                </span>
+
+                {generateNumberRange(currentPage, lastPage, 2).map((page) => (
+                <span
+                    key={page}
+                    className={`pagination-button-page ${page === currentPage ? 'active' : ''}`}
+                    onClick={() => fetchPage(page)}>
+                        {page}</span>
+                ))}
+
                 {nextPageUrl && (
                     <button
                         className="pagination-button"
@@ -123,6 +177,18 @@ const ProductsPage = () => {
                         Next
                     </button>
                 )}
+
+                {lastPageUrl && (
+                    <button
+                        className="pagination-button"
+                        onClick={() => fetchProducts(lastPageUrl)}
+                    >
+                        Last
+                    </button>
+                )}
+                <span className="pagination-total">
+                    Total items: {total}
+                </span>
             </div>
         </div>
     );

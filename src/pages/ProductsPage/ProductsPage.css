@@ -21,14 +21,23 @@
 }
 
 .pagination-button {
-    background-color: #004a9e;
-    color: white;
+    background: #4a26b9;
+    color: #ffffff;
     border: none;
     padding: 8px 16px;
     cursor: pointer;
     font-size: 14px;
     border-radius: 4px;
     outline: none;
+}
+
+.pagination-button-page {
+    color: #888383;
+    cursor: pointer;
+}
+
+.pagination-button-page.active {
+    color: #240A66FF;
 }
 
 .pagination-button:hover {
