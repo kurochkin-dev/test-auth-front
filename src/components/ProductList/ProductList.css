@@ -1,0 +1,57 @@
+.products-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.products-page h2 {
+    color: #004a9e;
+    font-size: 28px;
+    margin-bottom: 1rem;
+}
+
+.view-mode-toggle {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.view-mode-toggle button {
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.product-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product-grid .product-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* Активный элемент списка или сетки */
+.product-list .active,
+.product-grid .active {
+    background-color: #3498db;
+    color: white;
+}
