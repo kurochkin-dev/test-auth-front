@@ -6,7 +6,7 @@
 }
 
 .pagination-button {
-    background: #4a26b9;
+    background: #3498db;
     color: #ffffff;
     border: none;
     padding: 8px 16px;
@@ -53,7 +53,7 @@
 }
 
 .product-item h3 {
-    color: #004a9e;
+    color: #3498db;
     font-size: 24px;
     margin-bottom: 8px;
 }

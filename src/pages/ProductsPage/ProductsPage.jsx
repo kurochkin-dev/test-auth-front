@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import "./ProductsPage.css";
-import { FETCH_PRODUCTS_URL } from "./constants";
+import {FETCH_PRODUCTS_URL} from "./constants";
 import Pagination from "../../components/Pagination/Pagination";
 import ProductList from "../../components/ProductList/ProductList";
+
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +13,7 @@ const ProductsPage = () => {
     const [lastPageUrl, setLastPageUrl] = useState([]);
     const [prevPageUrl, setPrevPageUrl] = useState([]);
     const [nextPageUrl, setNextPageUrl] = useState([]);
-    const [viewMode, setViewMode] = useState("list");
+    const [viewMode, setViewMode] = useState("grid");
 
     useEffect(() => {
         fetchProducts();
@@ -33,7 +34,7 @@ const ProductsPage = () => {
     }
 
     const toggleViewMode = () => {
-        setViewMode(viewMode === "list" ? "grid" : "list");
+        setViewMode(viewMode === "grid" ? "list" : "grid");
     };
 
     const fetchProducts = (url = FETCH_PRODUCTS_URL) => {
@@ -73,43 +74,45 @@ const ProductsPage = () => {
     };
 
     return (
-        <div className="products-page">
-            <h2>Products</h2>
+        <div className="wrapper">
+            <div className="products-page">
+                <h2>Products</h2>
 
 
-            <div className={"view-mode-toggle"}>
-                <button onClick={toggleViewMode}>
-                    Switch to {viewMode === "list" ? "Grid" : "List"} View
-                </button>
+                <div className={"view-mode-toggle"}>
+                    <button onClick={toggleViewMode}>
+                        Switch to {viewMode === "Grid" ? "list" : "Grid"} View
+                    </button>
+                </div>
+                <Pagination
+                    prevPageUrl={prevPageUrl}
+                    nextPageUrl={nextPageUrl}
+                    lastPageUrl={lastPageUrl}
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                    total={total}
+                    fetchPrev={fetchPrev}
+                    fetchPage={fetchPage}
+                    fetchNext={fetchNext}
+                    fetchLast={fetchLast}
+                />
+
+                <ProductList products={products}
+                             viewMode={viewMode}
+                />
+                <Pagination
+                    prevPageUrl={prevPageUrl}
+                    nextPageUrl={nextPageUrl}
+                    lastPageUrl={lastPageUrl}
+                    currentPage={currentPage}
+                    lastPage={lastPage}
+                    total={total}
+                    fetchPrev={fetchPrev}
+                    fetchPage={fetchPage}
+                    fetchNext={fetchNext}
+                    fetchLast={fetchLast}
+                />
             </div>
-            <Pagination
-                prevPageUrl={prevPageUrl}
-                nextPageUrl={nextPageUrl}
-                lastPageUrl={lastPageUrl}
-                currentPage={currentPage}
-                lastPage={lastPage}
-                total={total}
-                fetchPrev={fetchPrev}
-                fetchPage={fetchPage}
-                fetchNext={fetchNext}
-                fetchLast={fetchLast}
-            />
-
-            <ProductList products={products}
-                         viewMode={viewMode}
-            />
-            <Pagination
-                prevPageUrl={prevPageUrl}
-                nextPageUrl={nextPageUrl}
-                lastPageUrl={lastPageUrl}
-                currentPage={currentPage}
-                lastPage={lastPage}
-                total={total}
-                fetchPrev={fetchPrev}
-                fetchPage={fetchPage}
-                fetchNext={fetchNext}
-                fetchLast={fetchLast}
-            />
         </div>
     );
 };
